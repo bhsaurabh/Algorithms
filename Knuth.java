@@ -1,8 +1,8 @@
 import java.util.Random;
-public class Knuth extends SortingHelpers
+public class Knuth
 {
 	// Knuth shuffle -> Linear time uniform shuffling
-	public static void shuffle(Comparable[] a) 
+	public static void shuffle(Object[] a) 
 	{
 		Random rand = new Random();
 		int N = a.length;
@@ -13,5 +13,12 @@ public class Knuth extends SortingHelpers
 			// swap
 			exch(a, i, r);
 		}
+	}
+	
+	private static void exch(Object[] a, int i, int j)
+	{
+		Object swap = a[i];
+		a[i] = a[j];
+		a[j] = swap;
 	}
 }

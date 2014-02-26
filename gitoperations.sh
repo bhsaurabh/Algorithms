@@ -1,6 +1,10 @@
 # Navigte to my directory
 cd ~prime/Dev/Algorithms
 
+# Things that are nice to have in the cron log
+echo "----------------------------------------"
+date
+
 # Clean up all .class files
 rm *.class
 
