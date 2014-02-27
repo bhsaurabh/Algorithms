@@ -70,20 +70,28 @@ public class BST<Key extends Comparable<Key>, Value>
 	/* Ordered operations */
 	public Key min()
 	{
+		return min(root).getKey();
+	}
+
+	private Node min(Node x)
+	{
 		// return minimum key
-		Node x = root;
 		while (x.left != null)
 			x = x.left;
-		return x.getKey();
+		return x;
 	}
 
 	public Key max()
 	{
+		return max(root).getKey();
+	}
+
+	private Node max(Node x)
+	{
 		// return the maximum key
-		Node x = root;
 		while (x.right != null)
 			x = x.right;
-		return x.getKey();
+		return x;
 	}
 
 	public Key floor(Key key)
@@ -162,11 +170,12 @@ public class BST<Key extends Comparable<Key>, Value>
 	/* traversals */
 	public Iterable<Key> keys()
 	{
-		Queue<Key> q = new Queue<Key>();
+		QueueLL<Key> q = new QueueLL<Key>();
 		inorder(root, q);
+		return q;
 	}
 
-	private void inorder(Node x, Queue<Key> q)
+	private void inorder(Node x, QueueLL<Key> q)
 	{
 		if (x == null)	return;
 		// traverse left subtree
@@ -178,11 +187,67 @@ public class BST<Key extends Comparable<Key>, Value>
 	}
 
 	/* nice to have pre-order and post-order implemented */
-	private void preorder(Node x, Queue<Key> q)
+	private void preorder(Node x, QueueLL<Key> q)
 	{
 		if (x == null)	return;
 		q.enqueue(x.getKey());
 		preorder(x.left, q);
 		preorder(x.right, q);
+	}
+
+	private void postorder(Node x, QueueLL<Key> q)
+	{
+		if (x == null)	return;
+		postorder(x.left, q);
+		postorder(x.right, q);
+		q.enqueue(x.getKey());
+	}
+
+	/* Hibbard deletion */
+	public void delete(Key key)
+	{
+		root = delete(root, key);
+	}
+
+	/* helper to delete */
+	private Node delete(Node x, Key key)
+	{
+		if (x == null)	return null;
+		int cmp = key.compareTo(x.getKey());
+		if (cmp < 0)	x.left = delete(x.left, key);
+		else if (cmp > 0)	x.right = delete(x.right, key);
+		else
+		{
+			if (x.right == null)	return x.left;
+			if (x.left == null)	return x.right;
+
+			// keep backup of current node
+			Node tmp = x;
+			// make x point to minimum node of right subtree
+			x = min(tmp.right);
+			// re-route right link to point to tmp's right subtree without the minimum
+			x.right = deleteMin(tmp.right);
+			// re-route left link to point to tmp's left subtree
+			x.left = tmp.left;
+		}
+		// update counts
+		x.setCount(1 + size(x.left) + size(x.right));
+		return x;
+	}
+
+	private void deleteMin()
+	{
+		// use recursive helper
+		root = deleteMin(root);
+	}
+
+	/* helper to hibbard deletion */
+	private Node deleteMin(Node x)
+	{
+		if (x.left == null)	return x.right;
+		x.left = deleteMin(x.left);
+		// update counts
+		x.setCount(1 + size(x.left) + size(x.right));
+		return x;
 	}
 }
