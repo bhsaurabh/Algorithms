@@ -24,7 +24,9 @@ public class Stack<Item> implements Iterable<Item>
             return item;
         }
     }
-    
+
+
+
     private Item[] s;
     private int N;
     
