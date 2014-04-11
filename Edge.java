@@ -38,7 +38,7 @@ public class Edge implements Comparable<Edge> {
 
     /* String representation of the edge */
     public String toString() {
-        String edge = v + " -> " + w;
+        String edge = v + " <-> " + w;
         return edge;
     }
 }
