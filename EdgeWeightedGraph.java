@@ -2,7 +2,7 @@ public class EdgeWeightedGraph {
     /* An implementation of the EdgeWeightedGraph */
 
     private final int V;    // number of vertices
-    private final int E;    // number of edges 
+    private int E;    // number of edges 
     private final Bag<Edge>[] adj;  // an array of bag (of edges)
 
     /* Constructor */
