@@ -54,4 +54,12 @@ public class EdgeWeightedGraph {
                 }
         return edges;
     }
+
+    /* Get a string representation of the graph */
+    public String toString() {
+        StringBuilder graph = new StringBuilder();
+        for (Edge e : edges(true))
+            graph.append(e.toString() + "\n");
+        return graph.toString();
+    }
 }
