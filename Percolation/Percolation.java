@@ -66,7 +66,6 @@ public class Percolation {
     
     public boolean isOpen(int i, int j) {
         /* API: Is site (row i, column j) open? */
-        
         // calculate index
         int index = ((i - 1) * N) + j + 1;
         // Check the grid to see if this is open
