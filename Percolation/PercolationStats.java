@@ -6,6 +6,10 @@ public class PercolationStats {
     private Percolation system;
     private double[] thresholds;
 
+    // some data members good to store to avoid slowness
+    private double mu, std;
+    private boolean muStored, stdStored;
+
     public PercolationStats(int N, int T) {
         /* Constructor: Perform T independent computational experiments on a NxN grid */
         this.thresholds = new double[T];
@@ -36,12 +40,14 @@ public class PercolationStats {
         for (double threshold : thresholds)
             mu += threshold;
         mu /= thresholds.length;
+        this.mu = mu;
+        this.muStored = true;
         return mu;
     }
 
     public double stddev() {
         /* API: Sample standard deviation of percolation thresholds */
-        double mu = mean(); // TODO: should store mean when mean() is called. Here, check if mean is stored
+        if (!muStored)  mean();
         double std = 0.0;
 
         for (double threshold : thresholds) {
@@ -54,14 +60,16 @@ public class PercolationStats {
 
     public double confidenceLo() {
         /* API: Returns the lower bound of the 95% confidence interval */
-        double sigma = Math.sqrt(stddev());
+        if (!stdStored)   stddev();
+        double sigma = Math.sqrt(std);
         double rootT = Math.sqrt(thresholds.length);
         return (mean() - (1.96 * sigma / rootT));
     }
     
     public double confidenceHi() {
         /* API: Returns the upper bound of the 95% confidence interval */
-        double sigma = Math.sqrt(stddev());
+        if (!stdStored)   stddev();
+        double sigma = Math.sqrt(std);
         double rootT = Math.sqrt(thresholds.length);
         return (mean() + (1.96 * sigma / rootT));
     }
