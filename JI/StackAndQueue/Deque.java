@@ -1,0 +1,77 @@
+public class Deque<Item> {
+    /* A deque(deck) generalises a stack and a queue. Can add & remove from either end */
+
+    private class Node {
+        /* Internal representation of a Node in the deck */
+        private Item item;
+        private Node next;  // next node in deck
+        private Node prev;  // previous node in deck
+
+        public Node(Item item) {
+            this.item = item;
+        }
+    }
+
+    // Pointers to keep track of the deck
+    private Node first, last;
+    private int size;
+    public Deque() {
+        /* Constructor: Initialise pointers */
+        this.first = null;
+        this.last = null;
+        this.size = 0;  // Deck is empty initially
+    }
+
+    public boolean isEmpty() {
+        /* API: Is the deck empty? */
+        return first == null;
+    }
+
+    public void addFirst(Item item) {
+        /* API: Insert the item to the front of the deck */
+        Node oldfirst = first;
+        first = new Node(item);
+        first.next = oldfirst;
+        if (size == 0) {
+            // deck was empty
+            last = first;
+        }
+        else {
+            // deck was not empty
+            oldfirst.prev = first;
+        }
+        size++;
+    }
+
+    public void addLast(Item item) {
+        /* API: Insert the item to the rear of the deck */
+        Node oldlast = last;
+        last = new Node(item);
+        last.prev = oldlast;
+        if (isEmpty())  first = last;
+        else    oldlast.next = last;
+        size++;
+    }
+
+    public Item removeFirst() {
+        /* API: Remove an item from the front of the deck */
+        Item item = first.item;
+        first = first.next;
+        if (isEmpty())  last = first;
+        else    first.prev = null;
+        size--;
+        return item;
+    }
+
+    public Item removeLast() {
+        /* API: Remove an item from the rear of the deck */
+        Item item = last.item;
+        last = last.prev;
+        size--;
+        if (size == 0)
+            first = last;
+        else
+            last.next = null;
+        return item;
+    }
+}
