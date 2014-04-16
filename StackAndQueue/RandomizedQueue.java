@@ -42,11 +42,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public Item dequeu() {
         /* API: Delete and return a random element */
         if (isEmpty())
-            return NoSuchElementException("Cannot delete from an empty randomized queue.");
+            throw new NoSuchElementException("Cannot delete from an empty randomized queue.");
         int index = rand.nextInt(N);
         Item item = s[index];
         // exchange this spot with last element
         exch(index, --N);
+        s[N+1] = null;  // prevent loitering
         // resize
         if (N == s.length / 4)  resize(s.length / 2);
         return item;
@@ -61,6 +62,13 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     public int size() {
         /* API: return the number of items in the queue */
         return N;
+    }
+
+    private void exch(int i, int j) {
+        /* Helper: Exchange 2 elements in the array */
+        Item copy = s[i];
+        s[i] = s[j];
+        s[j] = copy;
     }
 
     /* Iteration functionality */
