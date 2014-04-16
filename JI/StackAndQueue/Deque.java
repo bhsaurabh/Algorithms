@@ -1,4 +1,6 @@
-public class Deque<Item> {
+import java.util.Iterator;
+import java.lang.Iterable;
+public class Deque<Item> implements Iterable<Item> {
     /* A deque(deck) generalises a stack and a queue. Can add & remove from either end */
 
     private class Node {
@@ -73,5 +75,27 @@ public class Deque<Item> {
         else
             last.next = null;
         return item;
+    }
+
+
+    /* Iteration support */
+    public Iterator<Item> iterator() { return new DeckIterator(); }
+
+    private class DeckIterator implements Iterator<Item> {
+        private Node current = first;
+
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        public Item next() {
+            Item item = current.item;
+            current = current.next;
+            return item;
+        }
+
+        public void remove() {
+            // Not supported 
+        }
     }
 }
