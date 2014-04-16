@@ -33,7 +33,7 @@ public class Deque<Item> implements Iterable<Item> {
 
     public void addFirst(Item item) {
         /* API: Insert the item to the front of the deck */
-        if (!item)
+        if (item == null)
             throw new NullPointerException("Cannot add a NULL value.");
         Node oldfirst = first;
         first = new Node(item);
@@ -51,7 +51,7 @@ public class Deque<Item> implements Iterable<Item> {
 
     public void addLast(Item item) {
         /* API: Insert the item to the rear of the deck */
-        if (!item)
+        if (item == null)
             throw new NullPointerException("Cannot add a NULL value.");
         Node oldlast = last;
         last = new Node(item);
