@@ -1,5 +1,7 @@
 import java.util.Iterator;
 import java.lang.Iterable;
+import java.util.NoSuchElementException;
+
 public class Deque<Item> implements Iterable<Item> {
     /* A deque(deck) generalises a stack and a queue. Can add & remove from either end */
 
@@ -31,6 +33,8 @@ public class Deque<Item> implements Iterable<Item> {
 
     public void addFirst(Item item) {
         /* API: Insert the item to the front of the deck */
+        if (!item)
+            throw new NullPointerException("Cannot add a NULL value.");
         Node oldfirst = first;
         first = new Node(item);
         first.next = oldfirst;
@@ -47,6 +51,8 @@ public class Deque<Item> implements Iterable<Item> {
 
     public void addLast(Item item) {
         /* API: Insert the item to the rear of the deck */
+        if (!item)
+            throw new NullPointerException("Cannot add a NULL value.");
         Node oldlast = last;
         last = new Node(item);
         last.prev = oldlast;
@@ -57,6 +63,8 @@ public class Deque<Item> implements Iterable<Item> {
 
     public Item removeFirst() {
         /* API: Remove an item from the front of the deck */
+        if (isEmpty())
+            throw new NoSuchElementException("Cannot delete from an empty Deck.");
         Item item = first.item;
         first = first.next;
         if (isEmpty())  last = first;
@@ -67,6 +75,8 @@ public class Deque<Item> implements Iterable<Item> {
 
     public Item removeLast() {
         /* API: Remove an item from the rear of the deck */
+        if (isEmpty())
+            throw new NoSuchElementException("Cannot delete from an empty Deck.");
         Item item = last.item;
         last = last.prev;
         size--;
@@ -89,6 +99,8 @@ public class Deque<Item> implements Iterable<Item> {
         }
 
         public Item next() {
+            if(!hasNext())
+                throw new NoSuchElementException("No more elements to iterate upon.");
             Item item = current.item;
             current = current.next;
             return item;
@@ -96,6 +108,7 @@ public class Deque<Item> implements Iterable<Item> {
 
         public void remove() {
             // Not supported 
+            throw new UnsupportedOperationException("remove() not supported within Iterators.");
         }
     }
 }
