@@ -38,4 +38,15 @@ public class RandomizedQueue<Item> {
         if (N == s.length / 4)  resize(s.length / 2);
         return item;
     }
+
+    public Item sample() {
+        /* API: Return (but do not delete) a randomly chosen element */
+        int index = rand.nextInt(N);
+        return s[index];
+    }
+
+    public int size() {
+        /* API: return the number of items in the queue */
+        return N;
+    }
 }
