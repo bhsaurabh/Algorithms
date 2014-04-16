@@ -21,6 +21,14 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         /* API: Check if queue is empty? */
         return N == 0;
     }
+    
+    private void resize(int capacity) {
+        /* Helper: Resize the array for adjusting more/less elements */
+        Item[] copy = (Item[]) new Object[capacity];
+        for (int i = 0; i < N; i++)
+            copy[i] = s[i];
+        s = copy;
+    }
 
     public void enqueue(Item item) {
         /* API: Add an item to the randomized queue */
@@ -29,14 +37,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             throw new NullPointerException("Cannot add NULL values.");
         if (N == s.length)  resize(N*2);
         s[N++] = item;
-    }
-
-    private void resize(int capacity) {
-        /* Helper: Resize the array for adjusting more/less elements */
-        Item[] copy = (Item[]) new Object[capacity];
-        for (int i = 0; i < N; i++)
-            copy[i] = s[i];
-        s = copy;
     }
 
     public Item dequeu() {
