@@ -50,12 +50,28 @@ public class Stack<Item> implements Iterable<Item> {
          * Returns:
          *   item: The item that was popped
          */
+        if (isEmpty())
+            throw new NoSuchElementException("Cannot pop from an empty stack.");
         Item item = s[--N];
         s[N] = null;    // prevent loitering
         if (N == s.length / 4) {
             resize(s.length / 2);   // reduce array size to fit
         }
         return item;
+    }
+    
+    public Item peek() {
+        /** Returns the element on the top of the stack
+         * But does not delete it
+         *
+         * Args:
+         *   None
+         * Returns:
+         *   Top element in stack
+         */
+        if (isEmpty())
+            throw new NoSuchElementException("Stack is empty.");
+        return s[N-1];
     }
 
     private void resize(int capacity) {
