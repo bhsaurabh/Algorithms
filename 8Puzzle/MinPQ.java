@@ -140,4 +140,28 @@ public class MinPQ<Key extends Comparable<Key>> implements Iterable<Key> {
         if (right <= N && less(right, k))   return false;
         return isMinHeap(left) && isMinHeap(right);
     }
+
+    /*******************************************************
+     * Iteration functionality
+     ******************************************************/
+    public Iterator<Key> iterator() {
+        return new HeapIterator();
+    }
+
+    private class HeapIterator implements Iterator<Key> {
+        // work with a copy of the priority queue
+        private int current = 1;
+     
+        public boolean hasNext() {
+            return current <= N;
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        public Key next() {
+            return pq[current++];
+        }
+    }
 }
