@@ -120,12 +120,13 @@ public class Board {
      }
 
      // helper to swap elements in a board
-     private void exch(int i, int j, int p, int q) {
+     private boolean exch(int i, int j, int p, int q) {
         if (i < 0 || p >= N || j < 0 || q >= N)
-            return;
+            return false;
         int temp = board[i][j];
         board[i][j] = board[p][q];
         board[p][q] = temp;
+        return true;
      }
 
      /**
@@ -166,5 +167,55 @@ public class Board {
             s.append("\n");
         }
         return s.toString();
+     }
+
+     /**
+      * Finds all neighboring boards (obtained after 1 legible movement)
+      * @return an iterable for all neighboring boards
+      */
+     public Iterable<Board> neighbors() {
+        // find the blank tile
+        int i0 = 0, j0 = 0;
+        boolean found = false;
+        for(int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (board[i][j] == 0) {
+                    i0 = i; 
+                    j0 = j;
+                    found = true;
+                }
+                if (found)  break;
+            }
+        }
+
+        // create a stack of neighbors
+        Stack<Board> boards = new Stack<Board>();
+        Board board = null;
+
+        board = new Board(this.board);
+        boolean isNeighbor = board.exch(i0, j0, i0-1, j0);
+        if (isNeighbor) {
+            boards.push(board);
+        }
+
+        board = new Board(this.board);
+        isNeighbor = board.exch(i0, j0, i0+1, j0);
+        if (isNeighbor) {
+            boards.push(board);
+        }
+
+        board = new Board(this.board);
+        isNeighbor = board.exch(i0, j0, i0, j0-1);
+        if (isNeighbor) {
+            boards.push(board);
+        }
+
+        board = new Board(this.board);
+        isNeighbor = board.exch(i0, j0, i0, j0+1);
+        if (isNeighbor) {
+            boards.push(board);
+        }
+
+        return boards;
      }
 }
