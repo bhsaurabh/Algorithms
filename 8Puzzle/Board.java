@@ -152,4 +152,19 @@ public class Board {
         if (N != x.length)  return false;
         return this.compareBoards(x, this.board);
      }
+
+     /** Yields a String representation of the board
+      * @return a String representation of the board
+      */
+     public String toString() {
+        // Use a StringBuilder for efficiency
+        StringBuilder s = new StringBuilder();
+        s.append(N + "\n");
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++)
+                s.append(String.format("%2d", board[i][j]));
+            s.append("\n");
+        }
+        return s.toString();
+     }
 }
