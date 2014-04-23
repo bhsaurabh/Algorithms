@@ -127,4 +127,29 @@ public class Board {
         board[i][j] = board[p][q];
         board[p][q] = temp;
      }
+
+     /**
+      * Checks if this board equals some other
+      * @param x, is the board to be compared with
+      * @return true if the boards are equal; false otherwise
+      */
+     public boolean equals(Object x) {
+        if (x == null)  return false;
+        if (x == this)  return true;
+        if (x.getClass() != this.getClass())    return false;
+
+        // actually compare, pass this objects board as it is a private member
+        Board that = (Board)(x);
+        return that.compareTiles(this.board);
+     }
+
+     /**
+      * Compare the tiles of 2 boards
+      * @param x, tiles to be compared to
+      * @return true, if the tiles are same; false otherwise
+      */
+     public boolean compareTiles(int[][] x) {
+        if (N != x.length)  return false;
+        return this.compareBoards(x, this.board);
+     }
 }
