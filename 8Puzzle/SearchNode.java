@@ -17,6 +17,40 @@ public class SearchNode implements Comparable<SearchNode> {
         this.cachedPriority = -1;
     }
 
+    /**
+     * Returns the board
+     * @return the board stored in the SearchNode
+     */
+    public Board getBoard() {
+        return this.board;
+    }
+
+    /**
+     * Returns the moves 
+     * @return the moves stored in the SearchNode
+     */
+    public int getMoves() {
+        return this.moves;
+    }
+
+
+    /**
+     * Returns the previous node 
+     * @return the previous Node stored in the SearchNode
+     */
+    public SearchNode getPrevious() {
+        return this.previous;
+    }
+
+
+    /**
+     * Updates the number of moves needed to reach this SearchNode 
+     * @param moves: the number of moves needed to reach this node
+     */
+    public int setMoves(int moves) {
+        this.moves = moves;
+    }
+
     /* Get the priority of this node */
     private int priority() {
         if (cachedPriority == -1) {
