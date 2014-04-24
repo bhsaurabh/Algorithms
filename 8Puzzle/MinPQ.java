@@ -11,7 +11,7 @@ public class MinPQ<Key extends Comparable<Key>> implements Iterable<Key> {
      * @param capacity: the initial capacity of the priority queue
      */
     public MinPQ(int capacity) {
-        this.pq = (Key[]) new Object[capacity+1];
+        this.pq = (Key[]) new Comparable[capacity+1];
         this.N = 0;
     }
 
@@ -53,7 +53,7 @@ public class MinPQ<Key extends Comparable<Key>> implements Iterable<Key> {
     // helper function to resize the priority queue array
     private void resize(int capacity) {
         assert capacity > N;
-        Key[] copy = (Key[]) new Object[capacity];
+        Key[] copy = (Key[]) new Comparable[capacity];
         for (int i = 0; i < N; i++) {
             copy[i] = pq[i];
         }
@@ -65,8 +65,8 @@ public class MinPQ<Key extends Comparable<Key>> implements Iterable<Key> {
      */
     public void insert(Key x) {
         // double the size of the array if required
-        if (N == pq.length) {
-            resize(N*2);
+        if (N == pq.length-1) {
+            resize(pq.length*2);
         }
 
         // add to end and swim up to correct position

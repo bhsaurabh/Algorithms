@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Solver {
     private Stack<Board> boards;
     private boolean isSolvable;
@@ -8,7 +10,7 @@ public class Solver {
      * @param initial: the initial board to be re-arranged
      */
     public Solver(Board initial) {
-        boards = new Stack<Board>();
+        this.boards = new Stack<Board>();
         if (initial.isGoal()) {
             this.isSolvable = true;
             this.moves = 0;
@@ -111,5 +113,30 @@ public class Solver {
             return this.boards;
         else
             return null;
+    }
+
+    /**
+     * Application Entry Point, Unit Testing
+     * @param argv: Command Line Arguments (Array of strings)
+     */
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt();
+        int[][] blocks = new int[N][N];
+        for (int i =0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                blocks[i][j] = sc.nextInt();
+            }
+        }
+        Board initial = new Board(blocks);
+
+        Solver solver = new Solver(initial);
+        if (!solver.isSolvable())
+            System.out.println("No solutions possible.");
+        else {
+            System.out.println("Minimum number of moves needed: " + solver.moves());
+            for (Board board : solver.solution())
+                System.out.println(board);
+        }
     }
 }
