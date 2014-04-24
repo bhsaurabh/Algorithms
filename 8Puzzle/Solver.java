@@ -51,7 +51,7 @@ public class Solver {
                 this.isSolvable = true;
                 this.boards.push(board);
                 // push all nodes in stack
-                while (node.previous != null) {
+                while (node.getPrevious() != null) {
                     node = node.getPrevious();
                     this.boards.push(node.getBoard());
                 }
@@ -59,8 +59,8 @@ public class Solver {
             }
 
             // process and check neighbors
-            node.setMoves(++node.getMoves());
-            nodeTwin.setMoves(++nodeTwin.getNodes());
+            node.setMoves(node.getMoves() + 1);
+            nodeTwin.setMoves(nodeTwin.getMoves() + 1);
             Iterable<Board> neighbors = board.neighbors();
             for (Board neighbor : neighbors) {
                 // Dont insert on PQ if already on it
@@ -86,7 +86,7 @@ public class Solver {
      * @return true if solvable, false otherwise
      */
     public boolean isSolvable() {
-        return this.solvable;
+        return this.isSolvable;
     }
 
     /**

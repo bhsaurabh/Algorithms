@@ -47,7 +47,7 @@ public class SearchNode implements Comparable<SearchNode> {
      * Updates the number of moves needed to reach this SearchNode 
      * @param moves: the number of moves needed to reach this node
      */
-    public int setMoves(int moves) {
+    public void setMoves(int moves) {
         this.moves = moves;
     }
 

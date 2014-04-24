@@ -94,13 +94,6 @@ public class MinPQ<Key extends Comparable<Key>> implements Iterable<Key> {
         return min;
     }
 
-    /**
-     * Return the size of the heap
-     * @return size: the size of the heap
-     */
-    public int size() {
-        return this.N;
-    }
 
     /*******************************************************
      * Helpers to maintain heap invariants
