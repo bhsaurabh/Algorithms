@@ -60,4 +60,8 @@ public class Stack<Item> implements Iterable<Item>
         if (N == s.length/4)    resize(s.length/2);
         return item;
     }
+
+    public int size() {
+        return N;
+    }
 }
