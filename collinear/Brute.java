@@ -58,8 +58,8 @@ public class Brute implements Runnable {
 
                         // check for collinearity
                         // should have same slope and 1 point in common
-                        if (p.slopeTo(q) != p.slopeTo(r))   continue;
-                        if (p.slopeTo(r) != p.slopeTo(s))   continue;
+                        if (Math.abs(p.slopeTo(q)) != Math.abs(p.slopeTo(r)))   continue;
+                        if (Math.abs(p.slopeTo(r)) != Math.abs(p.slopeTo(s)))   continue;
 
                         // these are collinear
                         CollinearPoint obj = new CollinearPoint(p, q, r, s);
@@ -69,6 +69,31 @@ public class Brute implements Runnable {
             }
         }
         return collinearSet;
+    }
+
+    private void processCollinearSet(ArrayList<CollinearPoint> collinearSet) {
+        /** Processes a collection of CollinearPoint objects
+         * Uses the information to print and plot the collinear points
+         */ 
+        StdDraw.setXscale(0, 32768);
+        StdDraw.setYscale(0, 32768);
+        for (CollinearPoint collection : collinearSet) {
+            Point[] collinearPoints = collection.getPoints();
+            Point p = collinearPoints[0];
+            p.draw();
+            System.out.print(p + " -> ");
+            for (int i = 1; i < 4; i++) {
+                collinearPoints[i].draw();
+                p.drawTo(collinearPoints[i]);
+                System.out.print(collinearPoints[i]);
+                if (i == 3) {
+                    System.out.println();
+                }
+                else {
+                    System.out.print(" -> ");
+                }
+            }
+        }
     }
 
     public void run() {
@@ -84,6 +109,9 @@ public class Brute implements Runnable {
 
         // Use brute force to find all collineat points
         ArrayList<CollinearPoint> collinearSet = findCollinearPoints();
+
+        // Print and plot the points
+        processCollinearSet(collinearSet);
     }
 
     public static void main(String[] args) {
