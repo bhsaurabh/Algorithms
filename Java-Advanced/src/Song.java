@@ -1,7 +1,7 @@
 /**
  * Created by saurabh on 5/4/14.
  */
-public class Song {
+public class Song implements Comparable<Song> {
     private String title, artist, rating, bpm;
 
     /**
@@ -65,5 +65,35 @@ public class Song {
     public String toString() {
         return title;
     }
+
+    /**
+     * Method overriding for interface Comparable
+     */
+    public int compareTo(Song that) {
+        return this.title.compareTo(that.getTitle());
+    }
+
+    /**
+     * Overridden equals method, to make 2 Song objects having same titles equal
+     *
+     * @param aSong is the Song to be compared against
+     *
+     * @return true, if aSong has the same title as this Song, false otherwise
+     */
+    public boolean equals(Object aSong) {
+        Song s = (Song) aSong;
+        return getTitle().equals(s.getTitle());
+    }
+
+    /**
+     * Overridden hashCode method, to make 2 equal songs have same hascode
+     *
+     * @return the hashCode of this object based on title
+     */
+    public int hashCode() {
+        return title.hashCode();
+    }
+
+
 
 }
