@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_java-advanced" default="compile.module.java-advanced">
+  <dirname property="module.java-advanced.basedir" file="${ant.file.module_java-advanced}"/>
+  
+  <property name="module.jdk.home.java-advanced" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.java-advanced" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.java-advanced" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.java-advanced" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="java-advanced.output.dir" value="${module.java-advanced.basedir}/out/production/Java-Advanced"/>
+  <property name="java-advanced.testoutput.dir" value="${module.java-advanced.basedir}/out/test/Java-Advanced"/>
+  
+  <path id="java-advanced.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="java-advanced.module.production.classpath">
+    <path refid="${module.jdk.classpath.java-advanced}"/>
+  </path>
+  
+  <path id="java-advanced.runtime.production.module.classpath">
+    <pathelement location="${java-advanced.output.dir}"/>
+  </path>
+  
+  <path id="java-advanced.module.classpath">
+    <path refid="${module.jdk.classpath.java-advanced}"/>
+    <pathelement location="${java-advanced.output.dir}"/>
+  </path>
+  
+  <path id="java-advanced.runtime.module.classpath">
+    <pathelement location="${java-advanced.testoutput.dir}"/>
+    <pathelement location="${java-advanced.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.java-advanced">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.java-advanced">
+    <patternset refid="excluded.from.module.java-advanced"/>
+  </patternset>
+  
+  <path id="java-advanced.module.sourcepath">
+    <dirset dir="${module.java-advanced.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.java-advanced" depends="compile.module.java-advanced.production,compile.module.java-advanced.tests" description="Compile module Java-Advanced"/>
+  
+  <target name="compile.module.java-advanced.production" depends="register.custom.compilers" description="Compile module Java-Advanced; production classes">
+    <mkdir dir="${java-advanced.output.dir}"/>
+    <javac2 destdir="${java-advanced.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.java-advanced}/javac">
+      <compilerarg line="${compiler.args.java-advanced}"/>
+      <bootclasspath refid="java-advanced.module.bootclasspath"/>
+      <classpath refid="java-advanced.module.production.classpath"/>
+      <src refid="java-advanced.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.java-advanced"/>
+    </javac2>
+    
+    <copy todir="${java-advanced.output.dir}">
+      <fileset dir="${module.java-advanced.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.java-advanced.tests" depends="register.custom.compilers,compile.module.java-advanced.production" description="compile module Java-Advanced; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.java-advanced" description="cleanup module">
+    <delete dir="${java-advanced.output.dir}"/>
+    <delete dir="${java-advanced.testoutput.dir}"/>
+  </target>
+</project>
